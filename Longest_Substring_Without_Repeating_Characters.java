@@ -6,8 +6,9 @@ class Solution {
         // one hash map for character position in array.
         Map<Character,Integer> loc = new HashMap<>();
         Map<Character,Integer> freq = new HashMap<>();
-
-        for(int right = 0;right<len;right++){
+        int max = 0;
+        int left =0;
+        for(int right = 0;right<s.length();right++){
 
             char curr = s.charAt(right);
             freq.put(curr, freq.getOrDefault(curr, 0)+1);
