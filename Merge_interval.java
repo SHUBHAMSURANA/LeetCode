@@ -12,6 +12,7 @@ class Solution {
         List<int[]> merged = new ArrayList<>();
         
         // Start with the first interval
+        // ********here we are not copying just reference*******
         int[] currentInterval = intervals[0];
         merged.add(currentInterval);
         
