@@ -1,4 +1,6 @@
-  // If there are no intervals, return empty array
+class Solution {
+    public int[][] merge(int[][] intervals) {
+          // If there are no intervals, return empty array
         if (intervals.length == 0) {
             return new int[0][];
         }
@@ -32,3 +34,5 @@
         
         // Convert list to 2D array and return
         return merged.toArray(new int[merged.size()][]);
+    }
+}
