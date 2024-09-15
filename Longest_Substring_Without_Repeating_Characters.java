@@ -1,26 +1,25 @@
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-
-        // Create 2 hash map
-        // one hash map for window freq
-        // one hash map for character position in array.
-        Map<Character,Integer> loc = new HashMap<>();
-        Map<Character,Integer> freq = new HashMap<>();
         int max = 0;
-        int left =0;
-        for(int right = 0;right<s.length();right++){
+        int i=0,j=0;
 
-            char curr = s.charAt(right);
-            freq.put(curr, freq.getOrDefault(curr, 0)+1);
-
-            if (freq.get(curr) > 1 && loc.get(curr) >= left) {
-                left = loc.get(curr)+1;
-                freq.put(curr, freq.get(curr)-1);
+        HashMap<Character, Integer> h = new HashMap();
+        while(i<=j && j<s.length()) {
+            char c = s.charAt(j);
+            if (h.containsKey(c)) {
+                int t = h.get(c);
+                while (i<=t) {
+                    h.remove(s.charAt(i));
+                    i++;
+                }
             }
-
-            max = Math.max(max, right-left+1);
-            loc.put(curr, right);
+            else {
+                h.put(c,j);
+                max = Math.max(max,j-i+1);
+                j++;
+            }
         }
+
         return max;
     }
 }
