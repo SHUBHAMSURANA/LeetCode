@@ -1,39 +1,52 @@
 class Solution {
     public int[][] merge(int[][] intervals) {
-          // If there are no intervals, return empty array
-        if (intervals.length == 0) {
-            return new int[0][];
-        }
-        
-        // Sort intervals by the starting value of each interval
-        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
-        
-        // List to store the merged intervals
-        List<int[]> merged = new ArrayList<>();
-        
-        // Start with the first interval
-        // ********here we are not copying just reference*******
-        int[] currentInterval = intervals[0];
-        merged.add(currentInterval);
-        
-        // Iterate over all the intervals
-        for (int[] interval : intervals) {
-            int currentEnd = currentInterval[1];
-            int nextStart = interval[0];
-            int nextEnd = interval[1];
-            
-            // Check if there is an overlap with the current interval
-            if (nextStart <= currentEnd) {
-                // If overlapping, merge the intervals by extending the end time
-                currentInterval[1] = Math.max(currentEnd, nextEnd);
-            } else {
-                // If not overlapping, move to the next interval
-                currentInterval = interval;
-                merged.add(currentInterval);
+
+        Arrays.sort(intervals, (a,b)-> Integer.compare(a[0],b[0]));
+
+        ArrayList<ArrayList<Integer>> a = new ArrayList<>();
+
+        int firstend = intervals[0][0];
+        int secondend = intervals[0][1];
+
+        for (int i=1;i<intervals.length;i++) {
+            if (secondend>=intervals[i][0]) {
+                if (secondend>=intervals[i][1]) {
+                    secondend = secondend;
+                }
+                else {
+                    secondend = intervals[i][1];
+                }
+                
+            }
+            else {
+                a.add(new ArrayList(Arrays.asList(firstend, secondend)));
+                firstend = intervals[i][0];
+                secondend = intervals[i][1]; 
             }
         }
-        
-        // Convert list to 2D array and return
-        return merged.toArray(new int[merged.size()][]);
+
+        a.add(new ArrayList(Arrays.asList(firstend, secondend)));
+
+         // Convert to 2D array
+        int rows = a.size();
+        int cols = a.get(0).size(); // Assuming all rows have same length
+        int[][] array = new int[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                array[i][j] = a.get(i).get(j);
+            }
+        }
+
+        // Printing using nested loops
+        for (ArrayList<Integer> row : a) {
+            for (Integer num : row) {
+                System.out.print(num + " ");
+            }
+            System.out.println(); // Newline for each row
+        }
+
+
+        return array;
     }
 }
