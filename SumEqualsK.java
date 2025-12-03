@@ -1,25 +1,25 @@
 class Solution {
-    public int subarraySum(int[] n, int k) {
-        //Arrays.sort(nums);
-        HashMap<Integer,Integer> h = new HashMap<>();
-        int sum=0;
-        int count =0;
-        for (int i=0;i<n.length;i++) {
-            sum+=n[i];
-            
-            if (sum==k) {
-                System.out.println("***"); 
-                count++;
+    public int subarraySum(int[] nums, int k) {
+
+        HashMap<Integer, Integer> h = new HashMap<>();
+        h.put(0, 1);       // important: prefix sum = 0 exists once
+
+        int sr = 0;        // prefix sum
+        int c = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            sr = sr + nums[i];    // curr prefix sum
+
+            int find = sr - k;    // look for needed prefix
+
+            if (h.containsKey(find)) {
+                c += h.get(find);
             }
-            else if (sum>k && h.containsKey(sum-k)) {
-                System.out.println(sum-k); 
-                System.out.println(h.toString()); 
-                System.out.println("*s**"); 
-             count++;
-            } 
-            h.put(sum, i);
+
+            h.put(sr, h.getOrDefault(sr, 0) + 1);
         }
 
-        return count;
+        return c;
     }
 }
+
