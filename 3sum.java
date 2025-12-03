@@ -1,22 +1,36 @@
 class Solution {
-    public List<List<Integer>> threeSum(int[] n) {
-        Arrays.sort(n);
-        HashMap<Integer,Integer> x = new HashMap<>();
-        Set<List<Integer>> tx = new HashSet<>();
-        for (int i=0;i<n.length;i++) {
-            x.put(n[i],i);
-        }
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
 
-        for (int i=0;i<n.length;i++) {
-            int t = n[i]*-1;
-             for (int j=i+1;j<n.length;j++) {
-                int z = n[j]*-1;
-                int f = t+z;
-                if (x.get(f)!= null && x.get(f)>i && x.get(f)>j) {
-                    tx.add(Arrays.asList(n[i],n[j],f));  
+        List<List<Integer>> re = new ArrayList<>();
+
+        for (int i=0;i<nums.length-2;i++) {
+
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            int t = nums[i] *(-1);
+
+            int l = i+1;
+            int r = nums.length-1;
+
+            while (l<r) {
+                int sum = nums[l]+nums[r];
+                if (sum==t) {
+                    re.add(Arrays.asList(nums[i],nums[l],nums[r]));
+                    while (l<r && nums[l] == nums[l+1]) {l++;}
+                    while (l<r && nums[r] == nums[r-1]) {r--;}
+
+                    l++;
+                    r--;
                 }
-             }   
+                else if (sum>t) {
+                    r--;
+                }
+                else {
+                    l++;
+                }
+            }
         }
-        return new ArrayList<>(tx);
+        
+        return re;
     }
 }
