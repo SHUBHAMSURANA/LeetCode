@@ -30,3 +30,14 @@ class Solution {
         return t;
     }
 }
+//**************************************Option 2 *******************************************
+static Map<String, List<String>> groupAnagrams(String[] words) {
+        Map<String, List<String>> map = new HashMap<>();
+        for (String word : words) {
+            char[] chars = word.toCharArray();
+            Arrays.sort(chars);
+            String key = new String(chars);   // sorted form as key
+            map.computeIfAbsent(key, k -> new ArrayList<>()).add(word);
+        }
+        return map;
+    }
